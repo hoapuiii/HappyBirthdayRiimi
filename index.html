@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Riimi!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti/dist/js-confetti.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #ff88cc;
+      --secondary-color: #8B4513;
+      --text-color: #333;
+      --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .message-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .message-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 136, 204, 0.1),
+        rgba(139, 69, 19, 0.1),
+        rgba(255, 182, 193, 0.1),
+        rgba(255, 218, 185, 0.1)
+      );
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50% }
+      50% { background-position: 100% 50% }
+      100% { background-position: 0% 50% }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .background-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.6;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      color: var(--secondary-color);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      text-align: center;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+
+    .message-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 800px;
+      width: 90%;
+      box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.1),
+        0 6px 6px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateY(50px);
+      display: none;
+    }
+
+    .message-content {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      text-align: right;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: colorChange 5s infinite;
+    }
+
+    @keyframes colorChange {
+      0% { filter: hue-rotate(0deg) }
+      100% { filter: hue-rotate(360deg) }
+    }
+
+    .next-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s var(--transition-timing);
+      font-family: 'Pacifico', cursive;
+      box-shadow: 0 4px 15px rgba(255, 136, 204, 0.3);
+    }
+
+    .next-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 136, 204, 0.4);
+      background: #ff66b2;
+    }
+
+    .icon-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      transition: all 0.3s var(--transition-timing);
+      cursor: pointer;
+    }
+
+    .icon::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(45deg) }
+      100% { transform: translateX(100%) rotate(45deg) }
+    }
+
+    .icon:hover {
+      transform: scale(1.1) rotate(10deg);
+    }
+
+    .kuromi-icon {
+      position: absolute;
+      top: 50%;
+      right: -80px;
+      transform: translateY(-50%);
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      transition: all 0.3s var(--transition-timing);
+    }
+
+    .kuromi-icon img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .final-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.1),
+        0 6px 6px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .final-content img {
+      max-width: 80%;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+    }
+
+    .final-content p {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .message-card {
+        padding: 1.5rem;
+      }
+
+      .icon-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @keyframes floating {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--primary-color);
+      border-radius: 50%;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .confetti {
+      position: absolute;
+      pointer-events: none;
+      z-index: 9999;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<div class="particles" id="particles"></div>
+<img src="https://i.postimg.cc/CLrBxPhs/image.png" alt="Background" class="background-image">
+<div class="confetti" id="confetti"></div>
+
+<div class="container">
+  <h1 id="title">Happy Birthday, Riimi! 🎉</h1>
+  <button class="next-btn" id="nextBtn">Open Your Card ✨</button>
+
+  <div class="message-card" id="messageCard">
+    <div class="message-content">
+      <p>Dear Riimi,</p>
+      <p>On this special day, I want to celebrate with you. I just want to say that you're always beautiful so you need to be more confident about yourself. You should smile a lot and don't be so depressed because you're pretty with smile on your face.</p>
+      <p>In the future, maybe I can't be beside you but I pray that your day is filled with all the things that make you happy - good food, cherished memories, and the embrace of those who love you most. May this birthday be a true reflection of the wonderful person you are, and may the year ahead bring you everything your heart desires.</p>
+    </div>
+    <div class="signature"> Yours always,<br>puipui</div>
+
+    <div class="kuromi-icon" id="kuromiIcon">
+      <img src="https://img.icons8.com/?size=100&id=sxtLRm71kvmx&format=png&color=000000" alt="Kuromi Icon">
+    </div>
+  </div>
+
+  <div class="icon-container" id="iconContainer">
+    <img src="https://img.icons8.com/?size=100&id=nT8MbKCHd41C&format=png&color=000000" class="icon" alt="Cinnamoroll Icon 1">
+    <img src="https://img.icons8.com/?size=100&id=XyXZ0ym1tSKu&format=png&color=000000" class="icon" alt="Cinnamoroll Icon 2">
+    <img src="https://img.icons8.com/?size=100&id=Y4n6c4tWCQOn&format=png&color=000000" class="icon" alt="Cinnamoroll Icon 3">
+    <img src="https://img.icons8.com/?size=100&id=Xx9XTaUJXsPz&format=png&color=000000" class="icon" alt="Cinnamoroll Icon 4">
+  </div>
+</div>
+
+<script>
+  // Initialize GSAP animations
+  document.addEventListener('DOMContentLoaded', () => {
+    createParticles();
+
+    gsap.to('#title', {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: 'back.out(1.7)'
+    });
+
+    // Initialize Vanilla-tilt for 3D hover effect
+    VanillaTilt.init(document.querySelector('.message-card'), {
+      max: 5,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.2,
+    });
+  });
+
+  // Button click animation
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    gsap.timeline()
+      .to('#title', {
+        opacity: 0,
+        y: -50,
+        duration: 0.5
+      })
+      .to('#nextBtn', {
+        opacity: 0,
+        scale: 0,
+        duration: 0.3
+      })
+      .set(['#title', '#nextBtn'], { display: 'none' })
+      .set('#messageCard', { display: 'block' })
+      .fromTo('#messageCard',
+        {
+          opacity: 0,
+          y: 50,
+          scale: 0.8
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          ease: 'power4.out',
+          onComplete: () => {
+            const jsConfetti = new JSConfetti();
+            jsConfetti.addConfetti({
+              confettiColors: [
+                '#ff88cc', '#8B4513', '#ff66b2', '#FFC0CB'
+              ]
+            });
+            animateMessage();
+          }
+        }
+      );
+  });
+
+  // Kuromi icon click animation
+  document.getElementById('kuromiIcon').addEventListener('click', () => {
+    gsap.to(['#messageCard', '#iconContainer'], {
+      opacity: 0,
+      scale: 0.8,
+      duration: 0.5,
+      onComplete: () => {
+        document.getElementById('messageCard').style.display = 'none';
+        document.getElementById('iconContainer').style.display = 'none';
+
+        const finalContent = document.createElement('div');
+        finalContent.className = 'final-content';
+        finalContent.innerHTML = `
+        <img src="https://i.postimg.cc/90jsCG0j/sad-ham.jpg" alt="Happy Birthday" style="max-width: 80%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+        <p style="font-family: 'Pacifico', cursive ; font-size: 1.5rem; color: var(--secondary-color); margin-top: 2rem;">I have presents for u and i hope u will love it!!! 🎁✨</p>
+      `;
+
+        document.querySelector('.container').appendChild(finalContent);
+
+        gsap.fromTo('.final-content',
+          {
+            opacity: 0,
+            scale: 0.8,
+            y: 50
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power4.out'
+          }
+        );
+      }
+    });
+  });
+
+  // Add floating animation to icons
+  document.querySelectorAll('.icon').forEach((icon, index) => {
+    gsap.to(icon, {
+      y: -15,
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: 'power1.inOut',
+      delay: index * 0.2
+    });
+  });
+
+  function createParticles() {
+    const particles = document.getElementById('particles');
+    const particleCount = 50;
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+
+      const size = Math.random() * 5 + 2;
+      const posX = Math.random() * window.innerWidth;
+      const delay = Math.random() * 2;
+      const duration = Math.random() * 2 + 1;
+
+      Object.assign(particle.style, {
+        width: `${size}px`,
+        height: `${size}px`,
+        left: `${posX}px`,
+        top: '-10px',
+        animation: `floating ${duration}s ${delay}s infinite`
+      });
+
+      fragment.appendChild(particle);
+    }
+
+    particles.appendChild(fragment);
+  }
+
+  // Thêm hiệu ứng cho message khi xuất hiện
+  function animateMessage() {
+    const messageContent = document.querySelector('.message-content');
+    const paragraphs = messageContent.querySelectorAll('p');
+
+    paragraphs.forEach((p, index) => {
+      gsap.from(p, {
+        opacity: 0,
+        x: -50,
+        duration: 1,
+        delay: index * 0.5,
+        ease: 'power2.out'
+      });
+    });
+  }
+
+  // Tối ưu event listener cho button
+
+
+  // Thêm lazy loading cho ảnh
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          observer.unobserve(img);
+        }
+      });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+  });
+</script>
+</body>
+</html>
